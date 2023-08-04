@@ -1,0 +1,30 @@
+class AppIconImages {
+  static const baseUrl = "assets/iconImage";
+  static const mGenderImg = "$baseUrl/mGenderImg.png";
+  static const fGenderImg = "$baseUrl/fGenderImg.png";
+  static const oGenderImg = "$baseUrl/oGenderImg.png";
+  static const calendarIconImg = "$baseUrl/calendarIconImg.png";
+  static const locationIconImg = "$baseUrl/locationIconImg.png";
+  static const helpIconImg = "$baseUrl/helpIconImg.png";
+  static const filterIconImg = "$baseUrl/filterIconImg.png";
+  static const shortIconImg = "$baseUrl/shortIconImg.png";
+  static const searchIconImg = "$baseUrl/searchIconImg.png";
+  static const commentIconImg = "$baseUrl/commentIconImg.png";
+  static const removeCircleIconImg = "$baseUrl/removeCircleIconImg.png";
+  static const backIconImg = "$baseUrl/backIconImg.png";
+  static const backArrowIconImg = "$baseUrl/backArrowIconImg.png";
+  static const forwardArrowIconImg = "$baseUrl/forwardArrowIconImg.png";
+  static const cnclReqIconImg = "$baseUrl/cnclReqIconImg.png";
+  static const aceptReqIconImg = "$baseUrl/aceptReqIconImg.png";
+  static const moreIconImg = "$baseUrl/moreIconImg.png";
+  static const editIconImg = "$baseUrl/editIconImg.png";
+  static const clearIconImg = "$baseUrl/clearIconImg.png";
+  static const msgSentIconImg = "$baseUrl/msgSentIconImg.png";
+  static const emojiIconImg = "$baseUrl/emojiIconImg.png";
+  static const galleryIconImg = "$baseUrl/galleryIconImg.png";
+  static const sendMsgIconImg = "$baseUrl/sendMsgIconImg.png";
+  static const shortArrowIconImg = "$baseUrl/shortArrowIconImg.png";
+  static const dropDownIconImg = "$baseUrl/dropDownIconImg.png";
+  static const successGreenIconImg = "$baseUrl/successGreenIconImg.png";
+  static const fbIconImg = "$baseUrl/fbIconImg.png";
+}
