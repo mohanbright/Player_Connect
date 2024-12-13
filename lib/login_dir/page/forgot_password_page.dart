@@ -23,14 +23,18 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ForgotPasswordProvider>(
-      create: (_) {
-        return ForgotPasswordProvider();
-      },
-      child: Consumer<ForgotPasswordProvider>(
-        builder: (context, provider, child) {
-          return SafeArea(
-              child: Scaffold(
+    return Consumer<ForgotPasswordProvider>(
+      builder: (context, provider, child) {
+        return GestureDetector(
+          onTap: (){
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: Stack(
+            children: [
+          Scaffold(
             body: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(
@@ -39,7 +43,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: AppFontSize.font10),
+                    SizedBox(height: MediaQuery.of(context).padding.top),
                     Image(
                       image: AssetImage(AppImages.appLogo),
                       height: AppFontSize.font60,
@@ -47,7 +51,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       fit: BoxFit.fill,
                     ),
                     SizedBox(height: AppFontSize.font12),
-                    buildTextSpan(AppStrings.strCant, AppStrings.strIsLogin),
+                    buildTextSpan("Forgot", "my password"),
                     SizedBox(height: AppFontSize.font20),
                     Text(AppStrings.strEmail,
                         style: AppFonts.poppinsFont(TextStyle(
@@ -81,33 +85,32 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         onTap: () {
                           if (provider.emailController.text.isEmpty) {
                             AppSnackBarToast.buildShowSnackBar(
-                                context, AppStrings.strEnterEmail);
+                                context, "Please enter Email");
                           } else {
-                            Navigator.pushNamed(
-                                context, AppRoutes.newPasswordPage);
+                            provider.getUserEmailData(context);
                           }
                         },
                         child: AppButtons.elevatedButton(
                             AppStrings.strSend.toUpperCase(),
                             AppFonts.poppinsFont(TextStyle(
-                                fontSize: AppFontSize.font16,
+                                fontSize: AppFontSize.font14,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.secondaryColorWhite)),
                             AppColors.primaryColorBlue)),
                     SizedBox(height: AppFontSize.font300),
                     Text.rich(TextSpan(
-                        text: AppStrings.strBackTo,
+                        text: AppStrings.strBackTo.toUpperCase(),
                         style: AppFonts.poppinsFont(TextStyle(
                             fontWeight: FontWeight.w400,
                             color: AppColors.secondaryColorBlack,
-                            fontSize: AppFontSize.font16)),
+                            fontSize: AppFontSize.font14)),
                         children: <InlineSpan>[
                           TextSpan(
                               text: AppStrings.strLogin.toUpperCase(),
                               style: AppFonts.poppinsFont(TextStyle(
                                   fontWeight: FontWeight.w700,
                                   color: AppColors.primaryColorBlue,
-                                  fontSize: AppFontSize.font16)),
+                                  fontSize: AppFontSize.font14)),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   Navigator.pushNamedAndRemoveUntil(context,
@@ -119,9 +122,16 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
               ),
             ),
-          ));
-        },
-      ),
+          ),
+          Visibility(
+              visible: provider.isLoading,
+              child: Scaffold(
+                  backgroundColor: Colors.black12,
+                  body: Center(child: CircularProgressIndicator())))
+            ],
+          ),
+        );
+      },
     );
   }
 }

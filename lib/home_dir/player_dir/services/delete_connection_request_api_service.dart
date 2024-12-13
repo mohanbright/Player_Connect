@@ -1,5 +1,4 @@
 import 'package:http/http.dart' as http;
-import 'package:player_connect/shared/constant/api_utils.dart';
 import 'package:player_connect/shared/constant/app_strings.dart';
 import 'package:player_connect/shared/constant/snack_bar_toast.dart';
 import 'package:player_connect/shared/constant/user_info.dart';
@@ -19,7 +18,7 @@ class DeleteConnectionRequestRequestApiService {
   Future? deleteConnectionRequest(context) async {
     try {
       var response = await http.post(
-        Uri.parse(AppApiUtils.deleteConnectionRequestUrl),
+        Uri.parse("AppApiUtils.deleteConnectionRequestUrl"),
         headers: {
           "auth_token": UserDetails.userAuthToken!,
           "request_id": "12345",

@@ -2,6 +2,9 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:player_connect/shared/auth/is_user_online.dart';
+import 'package:player_connect/shared/auth/local_db_saver.dart';
+import 'package:player_connect/shared/constant/app_details.dart';
 import 'package:player_connect/shared/constant/app_strings.dart';
 import 'package:player_connect/shared/constant/button.dart';
 import 'package:player_connect/shared/constant/colors.dart';
@@ -24,6 +27,7 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
   PageController pageController = PageController(initialPage: 0);
   int index = 0;
   late Timer timer;
+  bool isChecked = false;
 
   @override
   void initState() {
@@ -48,97 +52,136 @@ class _PlayerInfoPageState extends State<PlayerInfoPage> {
   @override
   Widget build(BuildContext context) {
     deviceHeight(MediaQuery.of(context).size.height);
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: AppFontSize.font20, horizontal: AppFontSize.font10),
-              child: Column(
-                children: [
-                  Image(
-                      image: AssetImage(AppImages.splashPageLogo),
-                      height: AppFontSize.font40),
-                  SizedBox(height: AppFontSize.font20),
-                  Container(
-                    height: AppFontSize.font300 +
-                        AppFontSize.font180 +
-                        AppFontSize.font10,
-                    child: PageView(
-                      controller: pageController,
-                      onPageChanged: (value) {
-                        index = value;
-                        setState(() {});
-                      },
-                      children: [
-                        Page1(),
-                        Page2(),
-                        Page3(),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: AppFontSize.font20, horizontal: AppFontSize.font10),
+            child: Column(
+              children: [
+                SizedBox(height: MediaQuery.of(context).padding.top),
+                Image(
+                    image: AssetImage(AppImages.splashPageLogo),
+                    height: AppFontSize.font40),
+                SizedBox(height: AppFontSize.font20),
+                Container(
+                  height: AppFontSize.font300 + AppFontSize.font180+5,
+                  child: PageView(
+                    controller: pageController,
+                    onPageChanged: (value) {
+                      index = value;
+                      setState(() {});
+                    },
                     children: [
-                      Container(
-                        height: AppFontSize.font8,
-                        width:
-                            index == 0 ? AppFontSize.font32 : AppFontSize.font8,
-                        decoration: BoxDecoration(
-                            color: index == 0
-                                ? AppColors.primaryColorSkyBlue
-                                : AppColors.infoPageCount,
-                            borderRadius:
-                                BorderRadius.circular(AppFontSize.font6)),
-                      ),
-                      SizedBox(width: AppFontSize.font8),
-                      Container(
-                        height: AppFontSize.font8,
-                        width:
-                            index == 1 ? AppFontSize.font32 : AppFontSize.font8,
-                        decoration: BoxDecoration(
-                            color: index == 1
-                                ? AppColors.primaryColorSkyBlue
-                                : AppColors.infoPageCount,
-                            borderRadius:
-                                BorderRadius.circular(AppFontSize.font6)),
-                      ),
-                      SizedBox(width: AppFontSize.font8),
-                      Container(
-                        height: AppFontSize.font8,
-                        width:
-                            index == 2 ? AppFontSize.font32 : AppFontSize.font8,
-                        decoration: BoxDecoration(
-                            color: index == 2
-                                ? AppColors.primaryColorSkyBlue
-                                : AppColors.infoPageCount,
-                            borderRadius:
-                                BorderRadius.circular(AppFontSize.font6)),
-                      ),
+                      Page1(),
+                      Page2(),
+                      Page3(),
                     ],
                   ),
-                  SizedBox(height: AppFontSize.font20),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, AppRoutes.loginPage, (route) => false);
-                    },
-                    child: AppButtons.elevatedButton(
-                        AppStrings.strGetStarted,
-                        AppFonts.poppinsFont(TextStyle(
-                            fontSize: AppFontSize.font16,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.secondaryColorWhite)),
-                        AppColors.primaryColorBlue),
-                  ),
-                  SizedBox(height: AppFontSize.font4),
-                ],
-              ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: AppFontSize.font8,
+                      width:
+                          index == 0 ? AppFontSize.font32 : AppFontSize.font8,
+                      decoration: BoxDecoration(
+                          color: index == 0
+                              ? AppColors.primaryColorSkyBlue
+                              : AppColors.infoPageCount,
+                          borderRadius:
+                              BorderRadius.circular(AppFontSize.font6)),
+                    ),
+                    SizedBox(width: AppFontSize.font8),
+                    Container(
+                      height: AppFontSize.font8,
+                      width:
+                          index == 1 ? AppFontSize.font32 : AppFontSize.font8,
+                      decoration: BoxDecoration(
+                          color: index == 1
+                              ? AppColors.primaryColorSkyBlue
+                              : AppColors.infoPageCount,
+                          borderRadius:
+                              BorderRadius.circular(AppFontSize.font6)),
+                    ),
+                    SizedBox(width: AppFontSize.font8),
+                    Container(
+                      height: AppFontSize.font8,
+                      width:
+                          index == 2 ? AppFontSize.font32 : AppFontSize.font8,
+                      decoration: BoxDecoration(
+                          color: index == 2
+                              ? AppColors.primaryColorSkyBlue
+                              : AppColors.infoPageCount,
+                          borderRadius:
+                              BorderRadius.circular(AppFontSize.font6)),
+                    ),
+                  ],
+                ),
+                SizedBox(height: AppFontSize.font20),
+                Row(
+                  children: [
+                    Checkbox(
+                      focusColor: Color(0xff000080),
+                      value: isChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          isChecked = value!;
+                        });
+                      },
+                    ),
+                    Text(
+                      "Don’t show again",
+                      style: AppFonts.mazzardFont(TextStyle(
+                          fontSize: AppFontSize.font12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.primaryColorBlue)),
+                    ),
+                  ],
+                ),
+                InkWell(
+                  onTap: () {
+                    // Navigator.pushNamedAndRemoveUntil(
+                    //     context, AppRoutes.loginPage, (route) => false);
+
+                    if (isChecked == true) {
+                      LocalDataSaver.saveUserSplashData(false);
+                    }
+                    getLoggedData();
+                  },
+                  child: AppButtons.elevatedButton(
+                      AppStrings.strGetStarted,
+                      AppFonts.mazzardFont(TextStyle(
+                          fontSize: AppFontSize.font14,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.secondaryColorWhite)),
+                      AppColors.primaryColorBlue),
+                ),
+                SizedBox(height: AppFontSize.font10),
+                SizedBox(height: AppFontSize.font4),
+              ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  getLoggedData() {
+    // NotificationService.onMessageOpen(context);
+    LocalDataSaver.getUserLogData().then((value) {
+      fetchDataSPreferences();
+      if (value == true) {
+        UserOnlineApiService.getInstance().isUserOnline(1);
+        pageSelected = 0;
+        Navigator.pushNamedAndRemoveUntil(
+            context, AppRoutes.dashBoardPage, (route) => false);
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+            context, AppRoutes.loginPage, (route) => false);
+      }
+    });
   }
 }

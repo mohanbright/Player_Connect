@@ -6,30 +6,106 @@ import 'package:player_connect/shared/constant/font_size.dart';
 import 'package:player_connect/shared/constant/fonts.dart';
 
 class PlayerStyleDialogWidget extends StatefulWidget {
-  const PlayerStyleDialogWidget({Key? key}) : super(key: key);
+  final provider;
+
+  const PlayerStyleDialogWidget({Key? key, this.provider}) : super(key: key);
 
   @override
-  State<PlayerStyleDialogWidget> createState() =>
-      _PlayerStyleDialogWidgetState();
+  State<PlayerStyleDialogWidget> createState() => _AlertDialogWidgetState();
 }
 
-class _PlayerStyleDialogWidgetState extends State<PlayerStyleDialogWidget> {
+class _AlertDialogWidgetState extends State<PlayerStyleDialogWidget> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(AppStrings.strPlayingStyle,
-          textAlign: TextAlign.center,
-          style: AppFonts.mazzardFont(TextStyle(
-              fontWeight: FontWeight.w700,
-              color: AppColors.primaryColorBlue,
-              fontSize: AppFontSize.font18))),
-      content: SingleChildScrollView(
-        child: Text(
-            "This player is learning to judge where the oncoming ball is going and how much swing is needed to return it consistently. Movement to the ball and recovery are ofter not efficient. Can sustain a backcourt rally of slow pace with other players of similar ability and is beginning to develop stokes. This play is becoming more familiar with the basic positions for singles and doubles, and is ready to play social matches, leagues and low-level touraments.\n\nPotential limitations: grip weaknesses; limited swing and inconsistent toss on serve; limited transitions to the net.",
-            style: AppFonts.mazzardFont(TextStyle(
-                fontWeight: FontWeight.w400,
-                color: AppColors.secondaryColorBlack,
-                fontSize: AppFontSize.font14))),
+      title: Text(
+        AppStrings.strPlayingStyle,
+        textAlign: TextAlign.center,
+        style: AppFonts.mazzardFont(TextStyle(
+          fontWeight: FontWeight.w700,
+          color: AppColors.primaryColorBlue,
+          fontSize: AppFontSize.font18,
+        )),
+      ),
+      content: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: ListView.separated(
+          shrinkWrap: true,
+          itemCount: widget.provider.playingStyleList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(
+              onTap: () {
+                setState(() {});
+              },
+              titleAlignment: widget.provider.ratingListIndex == index
+                  ? ListTileTitleAlignment.top
+                  : ListTileTitleAlignment.center,
+              contentPadding: const EdgeInsets.all(0),
+              title: Text(
+                widget.provider.playingStyleTitlesList[index],
+                style: AppFonts.poppinsFont(TextStyle(
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.secondaryColorBlack,
+                  fontSize: AppFontSize.font14,
+                )),
+              ),
+              leading: Container(
+                height: AppFontSize.font28,
+                width: AppFontSize.font45,
+                decoration: BoxDecoration(
+                  color: widget.provider.ratingListIndex == index
+                      ? AppColors.primaryColorBlue
+                      : AppColors.primaryColorSkyBlue,
+                  borderRadius: BorderRadius.circular(AppFontSize.font12),
+                ),
+                child: Center(
+                  child: Text(
+                    widget.provider.playingStyleList[index].toString(),
+                    style: AppFonts.poppinsFont(
+                      TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: widget.provider.ratingListIndex == index
+                            ? AppColors.secondaryColorWhite
+                            : AppColors.primaryColorBlue,
+                        fontSize: AppFontSize.font12,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              trailing: InkWell(
+                onTap: () {
+                  widget.provider.getRatingIndex(index);
+                  setState(() {});
+                },
+                child: widget.provider.ratingListIndex == index
+                    ? Icon(
+                        Icons.keyboard_arrow_up_outlined,
+                        color: AppColors.secondaryColorBlack,
+                      )
+                    : Icon(
+                        Icons.keyboard_arrow_down_outlined,
+                        color: AppColors.secondaryColorBlack,
+                      ),
+              ),
+              subtitle: widget.provider.ratingListIndex == index
+                  ? Text(
+                      widget.provider.playingStyleDescriptionList[index],
+                      style: AppFonts.poppinsFont(
+                        TextStyle(
+                          fontSize: AppFontSize.font14,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.secondaryColorBlack,
+                        ),
+                      ),
+                    )
+                  : null,
+            );
+          },
+          separatorBuilder: (context, index) {
+            return const Divider();
+          },
+        ),
       ),
       actions: <Widget>[
         InkWell(
@@ -37,13 +113,15 @@ class _PlayerStyleDialogWidgetState extends State<PlayerStyleDialogWidget> {
             Navigator.of(context).pop();
           },
           child: AppButtons.elevatedButton(
-              AppStrings.strClose.toUpperCase(),
-              AppFonts.poppinsFont(TextStyle(
-                  fontSize: AppFontSize.font14,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.secondaryColorWhite)),
-              AppColors.primaryColorBlue),
-        )
+            AppStrings.strClose.toUpperCase(),
+            AppFonts.poppinsFont(TextStyle(
+              fontSize: AppFontSize.font14,
+              fontWeight: FontWeight.w600,
+              color: AppColors.secondaryColorWhite,
+            )),
+            AppColors.primaryColorBlue,
+          ),
+        ),
       ],
     );
   }

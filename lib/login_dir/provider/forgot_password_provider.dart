@@ -1,7 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:player_connect/login_dir/services/forgot_pass_api_service.dart';
 
 class ForgotPasswordProvider extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
+  bool isLoading = false;
+
+  getUserEmailData(context) async {
+    isLoading = true;
+    notifyListeners();
+    await ForgotApiService.getInstance()
+        .getUserEmail(context, emailController.text.trim())!
+        .whenComplete(() {
+      // emailController.clear();
+      isLoading = false;
+      notifyListeners();
+    }).onError((error, stackTrace) {
+      isLoading = false;
+      notifyListeners();
+    });
+
+    isLoading = false;
+
+    notifyListeners();
+  }
 
   bool emailValid(email) {
     bool emailValid = RegExp(

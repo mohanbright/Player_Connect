@@ -1,9 +1,10 @@
 // ignore_for_file: unused_local_variable
 
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:player_connect/shared/auth/routes.dart';
 import 'package:player_connect/shared/constant/api_utils.dart';
-import 'package:player_connect/shared/constant/app_strings.dart';
 import 'package:player_connect/shared/constant/snack_bar_toast.dart';
 import 'package:player_connect/shared/constant/user_info.dart';
 
@@ -16,23 +17,32 @@ class NewPassApiService {
     _instance ??= NewPassApiService._internal();
     return _instance!;
   }
-/* ==============================================New Password Api================================================*/
 
-  Future? newPasswordData(context, email, password) async {
+  Future? updatePassword(context, password) async {
     try {
-      var response = await http.post(Uri.parse(AppApiUtils.signUpUrl), body: {
-        "email": email,
+      final Map<String, dynamic> requestData = {
         "password": password,
-        "fcm_token": UserDetails.userFcmToken,
-      });
+      };
+
+      final http.Response response = await http.post(
+        Uri.parse(AppApiUtils.changePassReq),
+        headers: {
+          'Authorization': 'Bearer ${UserDetails.userAuthToken!}',
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(requestData),
+      );
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
-      } else {
         AppSnackBarToast.buildShowSnackBar(
-            context, AppStrings.strSomethingWrong);
+            context, "Password Update Successfully");
+        Navigator.pushNamedAndRemoveUntil(
+            context, AppRoutes.loginPage, (route) => false);
+      } else {
+        AppSnackBarToast.buildShowSnackBar(context, "Something went wrong");
       }
     } catch (e) {
-      AppSnackBarToast.buildShowSnackBar(context, AppStrings.strSomethingWrong);
+      AppSnackBarToast.buildShowSnackBar(context, "Something went wrong");
       return e;
     }
   }

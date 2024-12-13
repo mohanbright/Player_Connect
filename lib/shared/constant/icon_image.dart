@@ -8,6 +8,7 @@ class AppIconImages {
   static const helpIconImg = "$baseUrl/helpIconImg.png";
   static const filterIconImg = "$baseUrl/filterIconImg.png";
   static const shortIconImg = "$baseUrl/shortIconImg.png";
+  static const filterIconsImg = "$baseUrl/filterIcon.png";
   static const searchIconImg = "$baseUrl/searchIconImg.png";
   static const commentIconImg = "$baseUrl/commentIconImg.png";
   static const removeCircleIconImg = "$baseUrl/removeCircleIconImg.png";
@@ -15,7 +16,7 @@ class AppIconImages {
   static const backArrowIconImg = "$baseUrl/backArrowIconImg.png";
   static const forwardArrowIconImg = "$baseUrl/forwardArrowIconImg.png";
   static const cnclReqIconImg = "$baseUrl/cnclReqIconImg.png";
-  static const aceptReqIconImg = "$baseUrl/aceptReqIconImg.png";
+  static const aceptReqIconImg = "$baseUrl/acceptReqIconImg.png";
   static const moreIconImg = "$baseUrl/moreIconImg.png";
   static const editIconImg = "$baseUrl/editIconImg.png";
   static const clearIconImg = "$baseUrl/clearIconImg.png";

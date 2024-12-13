@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Coach Connecter</string>
+    <string name="facebook_app_id">872728151041818</string>
+    <string name="fb_login_protocol_scheme">fb872728151041818</string>
+    <string name="facebook_client_token">9849e8368a5b3312746464c3eb585965</string>
+</resources>

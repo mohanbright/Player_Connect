@@ -17,35 +17,33 @@ class Page2 extends StatefulWidget {
 class _Page2State extends State<Page2> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: Padding(
-            padding: EdgeInsets.all(AppFontSize.font10),
-            child: Column(
-              children: [
-                Text(AppStrings.strConnectNearbyPlayers,
-                    style: AppFonts.mazzardFont(TextStyle(
-                        fontSize: AppFontSize.font18,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.secondaryColorBlack))),
-                SizedBox(height: AppFontSize.font10),
-                Text(
-                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium",
-                    textAlign: TextAlign.center,
-                    style: AppFonts.poppinsFont(TextStyle(
-                        fontSize: AppFontSize.font16,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.infoPageText))),
-                SizedBox(height: AppFontSize.font20),
-                Image(
-                  image: AssetImage(AppImages.playInfoImg2),
-                  height: AppFontSize.font300 + AppFontSize.font20,
-                  width: AppFontSize.font300 + AppFontSize.font20,
-                ),
-                SizedBox(height: AppFontSize.font10),
-              ],
-            ),
+    return Scaffold(
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.all(AppFontSize.font10),
+          child: Column(
+            children: [
+              Text(AppStrings.strConnectNearbyPlayers,
+                  style: AppFonts.mazzardFont(TextStyle(
+                      fontSize: AppFontSize.font18,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.secondaryColorBlack))),
+              SizedBox(height: AppFontSize.font10),
+              Text(
+                  "Find tennis players of similar skill as you and invite them to play!",
+                  textAlign: TextAlign.center,
+                  style: AppFonts.poppinsFont(TextStyle(
+                      fontSize: AppFontSize.font16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.infoPageText))),
+              SizedBox(height: AppFontSize.font20),
+              Image(
+                image: AssetImage(AppImages.playInfoImg2),
+                height: AppFontSize.font300 + AppFontSize.font20,
+                width: AppFontSize.font300 + AppFontSize.font20,
+              ),
+              SizedBox(height: AppFontSize.font10),
+            ],
           ),
         ),
       ),

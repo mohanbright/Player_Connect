@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:player_connect/home_dir/player_dir/model/players_list_model.dart';
 import 'package:player_connect/shared/constant/api_utils.dart';
-import 'package:player_connect/shared/constant/app_strings.dart';
-import 'package:player_connect/shared/constant/snack_bar_toast.dart';
 import 'package:player_connect/shared/constant/user_info.dart';
 
 class GetPlayersListApiService {
@@ -18,25 +16,45 @@ class GetPlayersListApiService {
 
 /* ==============================================Get Players List Api================================================*/
 
-  Future? getPlayersList(context) async {
+  List<PlayersListModelListBody> getPlayerList = [];
+
+  Future<List<PlayersListModelListBody>> getPlayersList() async {
     try {
       var response = await http.get(
-        Uri.parse(AppApiUtils.playersDetailsUrl),
+        Uri.parse(AppApiUtils.getPlayerList),
         headers: {
-          "auth_token": UserDetails.userAuthToken!,
+          'Authorization': 'Bearer ${UserDetails.userAuthToken!}',
+          'Content-Type': 'application/json',
         },
       );
+      // print("getPlayersList.body:${response.body}");
       if (response.statusCode == 200) {
+        getPlayerList.clear();
         final jsonResponse = jsonDecode(response.body);
-        final PlayersListModel user = PlayersListModel.fromJson(jsonResponse);
-        return user;
+        PlayersListModelList playersListModel =
+            PlayersListModelList.fromJson(jsonResponse);
+        List<PlayersListModelListBody> list = playersListModel.body!;
+        getPlayerList.addAll(list);
+        for (int i = 0; i < getPlayerList.length; i++) {
+          if (getPlayerList[i].id.toString() == UserDetails.userID ||getPlayerList[i].receiverStatus1 == 3 ||
+              getPlayerList[i].receiverStatus2 == 3 ||
+              getPlayerList[i].senderStatus1 == 3 ||
+              getPlayerList[i].senderStatus2 == 3) {
+            getPlayerList.removeAt(i);
+          }
+        }
+        return getPlayerList;
       } else {
-        AppSnackBarToast.buildShowSnackBar(
-            context, AppStrings.strSomethingWrong);
+        // print(response.body);
+        // AppSnackBarToast.buildShowSnackBar(
+        //     context, AppStrings.strSomethingWrong);
+        return [];
       }
     } catch (e) {
-      AppSnackBarToast.buildShowSnackBar(context, AppStrings.strSomethingWrong);
-      return e;
+      print(e);
+
+      // AppSnackBarToast.buildShowSnackBar(context, AppStrings.strSomethingWrong);
+      return [];
     }
   }
 }

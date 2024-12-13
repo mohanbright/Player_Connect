@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "352060403244",
+    "project_id": "coach-connecter",
+    "storage_bucket": "coach-connecter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352060403244:android:6205cfd5074f31a312ab89",
+        "android_client_info": {
+          "package_name": "com.app.player_connect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352060403244-jg11u6hn8bbj6ro9qt2462s3tok334c4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.player_connect",
+            "certificate_hash": "6308dad8ef38d16125ae35b701d44e1965c13d99"
+          }
+        },
+        {
+          "client_id": "352060403244-lprp5ec3grukvn428sq271ntdemkho7a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzDai7prchoC9_pcDqPJov711PGXXftXo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352060403244-cag55jj3dat65vuns25d35mtrt0bj309.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -28,6 +28,8 @@ import 'package:player_connect/setting_dir/page/edit_profile_dir/edit_profile_pa
 import 'package:player_connect/setting_dir/page/edit_profile_dir/edit_profile_page5.dart';
 import 'package:player_connect/setting_dir/page/notification_page.dart';
 import 'package:player_connect/setting_dir/page/setting_page.dart';
+import 'package:player_connect/shared/constant/app_details.dart';
+import 'package:player_connect/shared/models/userProfileModel.dart';
 import 'package:player_connect/shared/page/dashboard_page.dart';
 import 'package:player_connect/shared/page/player_info_page.dart';
 import 'package:player_connect/shared/page/splash_page.dart';
@@ -87,8 +89,8 @@ Map<String, WidgetBuilder> routes = {
   AppRoutes.connectPage: (context) => const ConnectPage(),
   AppRoutes.myProfilePage: (context) => const MyProfilePage(),
   AppRoutes.recommendedPage: (context) => const RecommendedPage(),
-  AppRoutes.playerProfilePage: (context) => const PlayerProfilePage(),
-  AppRoutes.chatDetailsPage: (context) => const ChatDetailsPage(),
+  AppRoutes.playerProfilePage: (context) => PlayerProfilePage(),
+  AppRoutes.chatDetailsPage: (context) => ChatDetailsPage(name: null),
   AppRoutes.settingPage: (context) => const SettingPage(),
   AppRoutes.deleteAccountPage: (context) => const DeleteAccountPage(),
   AppRoutes.editProfilePage1: (context) => const EditProfilePage1(),

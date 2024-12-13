@@ -2,6 +2,8 @@
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:player_connect/shared/auth/is_user_online.dart';
+import 'package:player_connect/shared/constant/app_details.dart';
 import 'package:player_connect/shared/constant/app_strings.dart';
 import 'package:player_connect/shared/constant/colors.dart';
 import 'package:player_connect/shared/constant/font_size.dart';
@@ -26,21 +28,36 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   getLoggedData() {
-    LocalDataSaver.getUserLogData().then((value) {
-      value == true
-          ? Future.delayed(Duration(seconds: 3), () {
+    // NotificationService.onMessageOpen(context);
+
+    LocalDataSaver.getUserSplashData().then((splashValue) {
+      if (splashValue != false) {
+        Future.delayed(Duration(seconds: 1), () {
+          Navigator.pushReplacementNamed(context, AppRoutes.playerInfoPage);
+        });
+      } else {
+        LocalDataSaver.getUserLogData().then((logValue) async {
+          fetchDataSPreferences();
+          if (logValue == true) {
+            await UserOnlineApiService.getInstance().isUserOnline(1);
+            Future.delayed(Duration(seconds: 1), () {
+              pageSelected = 0;
               Navigator.pushReplacementNamed(context, AppRoutes.dashBoardPage);
-            })
-          : Future.delayed(Duration(seconds: 3), () {
-              Navigator.pushReplacementNamed(context, AppRoutes.playerInfoPage);
             });
+          } else {
+            Future.delayed(Duration(seconds: 1), () {
+              Navigator.pushReplacementNamed(context, AppRoutes.loginPage);
+            });
+          }
+        });
+      }
     });
   }
 
   @override
   void initState() {
-    // getFcmToken();
     getLoggedData();
+
     super.initState();
   }
 
@@ -49,6 +66,10 @@ class _SplashPageState extends State<SplashPage> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     deviceHeight(MediaQuery.of(context).size.height);
+    // NotificationService.initialized(context);
+    // NotificationService.getInitialMessage();
+    // NotificationService.onMessage();
+    // NotificationService.onMessageOpen(context);
 
     return Scaffold(
       body: Center(

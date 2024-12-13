@@ -1,41 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:player_connect/home_dir/connect_dir/model/connectedPlayerModel.dart';
+import 'package:player_connect/home_dir/connect_dir/model/requestModel.dart';
+import 'package:player_connect/home_dir/connect_dir/services/connect_api_service.dart';
+import 'package:player_connect/home_dir/player_dir/services/response_request_api_service.dart';
 import 'package:player_connect/shared/constant/colors.dart';
 import 'package:player_connect/shared/constant/font_size.dart';
 import 'package:player_connect/shared/constant/fonts.dart';
-import 'package:player_connect/shared/constant/images.dart';
 
 class ConnectProvider extends ChangeNotifier {
-  bool isLoading = true;
-  List utrList = [
-    7.6,
-    7.9,
-    8.4,
-    8.0,
-    7.7,
-    8.2,
-  ];
+  List<SenderDetails> getReqPlayerList = [];
+  List<ConnectedPlayerModelBody> getConnectPlayerList = [];
 
-  List imgList = [
-    AppImages.playerRecc,
-  ];
-  List nameList = [
-    "Doris Edwards",
-    "Steve Jones",
-    "Lori Anderson",
-    "Mark Torres",
-    "Earl Taylor",
-    "Earl Taylor",
-  ];
+  bool isLoading = false;
+  bool isRequestLoading = false;
+  bool isConnectedLoading = false;
 
-  List addressList = [
-    "New Lamont, DE",
-  ];
-  List pointList = [
-    8.0,
-  ];
-  List shortNameList = [
-    "UTR",
-  ];
+  /* ==============================================Deny Request Api================================================*/
+
+  Future? responseRequest(context, id, status, index) async {
+    isLoading = true;
+    notifyListeners();
+    await RequestResponseApiService.getInstance()
+        .respRequest(context, id, status, index);
+    isLoading = false;
+    notifyListeners();
+    return;
+  }
+
+  Future? connectReqPlayer() async {
+    // isLoading = true;
+    // notifyListeners();
+    isRequestLoading = true;
+    getReqPlayerList.clear();
+    getReqPlayerList = await ConnectPlayerApiService.getInstance()
+        .connectReqPlayer()
+        .whenComplete(() {
+      notifyListeners();
+    });
+    isLoading = false;
+    isRequestLoading = false;
+    notifyListeners();
+  }
+
+  Future? connectPlayer() async {
+    // isLoading = true;
+    isConnectedLoading = true;
+    // notifyListeners();
+    getConnectPlayerList.clear();
+    getConnectPlayerList = await ConnectPlayerApiService.getInstance()
+        .connectPlayer()
+        .whenComplete(() {
+      notifyListeners();
+    });
+    isLoading = false;
+    isConnectedLoading = false;
+    notifyListeners();
+  }
+
   Widget buildText(text) {
     return Text(text,
         maxLines: 1,

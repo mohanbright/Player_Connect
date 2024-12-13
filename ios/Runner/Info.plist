@@ -2,62 +2,135 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>CFBundleDisplayName</key>
-	<string>Player Connect</string>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>player_connect</string>
+    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>com.ios.coachconnect.backgroundtask</string>
+    </array>
+    <key>CADisableMinimumFrameDurationOnPhone</key>
+    <true/>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>$(DEVELOPMENT_LANGUAGE)</string>
+    <key>CFBundleDisplayName</key>
+    <string>Player Connect</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>player_connect</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>$(FLUTTER_BUILD_NAME)</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>fb486921160606548</string> <!-- Facebook URL Scheme -->
+            </array>
+        </dict>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLName</key>
+            <string>Google</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>com.googleusercontent.apps.352060403244-leg4ksaskj9i6ro2p77i8sbu6ehpfdp3</string>
+                <string>com.googleusercontent.apps.851884870059-5dirp79kcc4le86rsbot1gt1l9534sen</string>
+            </array>
+        </dict>
+    </array>
 
-	<key>NSLocationWhenInUseUsageDescription</key>
-    <string>This app needs access to location when open.</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>This app needs access to location when in the background.</string>
+    <key>CFBundleVersion</key>
+    <string>$(FLUTTER_BUILD_NUMBER)</string>
+    <key>FacebookAppID</key>
+    <string>486921160606548</string>
+    <key>FacebookClientToken</key>
+    <string>44211a5a7c2e0cd85050763f4960a9d1</string>
+    <key>FacebookDisplayName</key>
+    <string>Coach Connecter</string>
 
-    <key>NSLocationTemporaryUsageDescriptionDictionary</key>
+    <key>GIDSignIn</key>
     <dict>
-      <key>YourPurposeKey</key>
-      <string>The example App requires temporary access to the device&apos;s precise location.</string>
+        <key>ClientID</key>
+        <string>352060403244-leg4ksaskj9i6ro2p77i8sbu6ehpfdp3.apps.googleusercontent.com</string>
+        <key>ServerClientID</key>
+        <string>AIzaSyBsknfc8ExDOVd01v2qMlXRU-gPHLCQMrs</string>
     </dict>
 
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>fbapi</string>
+        <string>fb-messenger-share-api</string>
+        <string>fbauth2</string>
+        <string>fbshareextension</string>
+        <string>google</string>
+        <string>googlechrome</string>
+    </array>
+
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
+
+    <key>NSCameraUsageDescription</key>
+    <string>To capture profile photo please grant camera access</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Player Connect requires access to your location to match you with nearby players and enhance your app experience.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>To ensure you receive relevant notifications and updates about nearby players and activities even when you are not actively using the app, PlayerConnect needs to access your location in the background.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>PlayerConnect uses your location to enhance your experience by providing location-based features such as finding nearby players and receiving location-specific updates while you are actively using the app.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>App needs access to photo lib for profile images</string>
+    <key>NSUserNotificationsUsageDescription</key>
+    <string>Your app needs access to notifications for important updates.</string>
+
+    <key>UIApplicationSupportsIndirectInputEvents</key>
+    <true/>
+
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+        <string>processing</string>
+        <string>remote-notification</string>
+    </array>
+
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+    <key>UIMainStoryboardFile</key>
+    <string>Main</string>
+
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
+    <key>FirebaseMessagingAutoInitEnabled</key>
+    <true/>
+
 </dict>
 </plist>

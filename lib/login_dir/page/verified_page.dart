@@ -18,47 +18,59 @@ class VerifiedPage extends StatefulWidget {
 class _VerifiedPageState extends State<VerifiedPage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    final Map<String, dynamic>? args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    final String email = args?['email']! ?? '';
+    final String socialId = args?['socialId']! ?? '';
+    final String socialType = args?['socialType']! ?? '';
+
+    print('Social Data : $email $socialId $socialType');
+    return Scaffold(
       body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: AppFontSize.font24, vertical: AppFontSize.font20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: AppFontSize.font24),
-              Image(
-                image: AssetImage(AppImages.appLogo),
-                height: AppFontSize.font60,
-                width: AppFontSize.font70,
-                fit: BoxFit.contain,
-              ),
-              SizedBox(height: AppFontSize.font24),
-              buildTextSpan(AppStrings.strThank, AppStrings.strYou),
-              SizedBox(height: AppFontSize.font35),
-              Text(AppStrings.strAccountVerified,
-                  style: AppFonts.poppinsFont(TextStyle(
-                      fontSize: AppFontSize.font16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.secondaryColorBlack))),
-              SizedBox(height: AppFontSize.font20),
-              InkWell(
-                onTap: () {
-                  Navigator.pushReplacementNamed(
-                      context, AppRoutes.createProfilePage1);
-                },
-                child: Text(AppStrings.strProceedToAccount,
-                    style: AppFonts.poppinsFont(TextStyle(
-                        fontSize: AppFontSize.font16,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.primaryColorBlue))),
-              ),
-              SizedBox(height: AppFontSize.font20),
-            ],
+    child: Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: AppFontSize.font24, vertical: AppFontSize.font20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: MediaQuery.of(context).padding.top),
+          Image(
+            image: AssetImage(AppImages.appLogo),
+            height: AppFontSize.font60,
+            width: AppFontSize.font70,
+            fit: BoxFit.contain,
           ),
-        ),
+          SizedBox(height: AppFontSize.font24),
+          buildTextSpan(AppStrings.strThank, AppStrings.strYou),
+          SizedBox(height: AppFontSize.font35),
+          Text(AppStrings.strAccountVerified,
+              style: AppFonts.poppinsFont(TextStyle(
+                  fontSize: AppFontSize.font16,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.secondaryColorBlack))),
+          SizedBox(height: AppFontSize.font20),
+          InkWell(
+            onTap: () {
+              Navigator.pushReplacementNamed(
+                  context, AppRoutes.createProfilePage1,
+                arguments: {
+                  'email': email,
+                  'socialId': socialId,
+                  'socialType': socialType,
+                },
+              );
+            },
+            child: Text(AppStrings.strProceedToAccount.toUpperCase(),
+                style: AppFonts.poppinsFont(TextStyle(
+                    fontSize: AppFontSize.font16,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primaryColorBlue))),
+          ),
+          SizedBox(height: AppFontSize.font20),
+        ],
       ),
-    ));
+    ),
+      ),
+    );
   }
 }

@@ -20,124 +20,115 @@ class ChangePassPage extends StatefulWidget {
 class _ChangePassPageState extends State<ChangePassPage> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ChangePassPageProvider>(
-      create: (_) {
-        return ChangePassPageProvider();
-      },
-      child: Consumer<ChangePassPageProvider>(
-        builder: (context, provider, child) {
-          return SafeArea(
-              child: Scaffold(
-            backgroundColor: AppColors.bgColor,
-            appBar: AppBar(
-              elevation: 0.0,
-              backgroundColor: AppColors.secondaryColorWhite,
-              // leading: InkWell(
-              //   onTap: () {
-              //     Navigator.pop(context);
-              //   },
-              //   child: Image(
-              //     image: AssetImage(AppIconImages.backIconImg),
-              //     height: AppFontSize.font24,
-              //     width: AppFontSize.font24,
-              //   ),
-              // ),
-              iconTheme: IconThemeData(color: AppColors.secondaryColorBlack),
-              centerTitle: true,
-              title: Text(AppStrings.strChangePassword,
-                  style: AppFonts.mazzardFont(TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primaryColorBlue,
-                      fontSize: AppFontSize.font18))),
-            ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: AppFontSize.font10,
-                    horizontal: AppFontSize.font20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: AppFontSize.font8),
-                    titleText(AppStrings.strCurrentPassword),
-                    SizedBox(height: AppFontSize.font8),
-                    textFieldContainer(
-                        provider,
-                        provider.currentPasswordController,
-                        AppStrings.strCurrentPassword,
-                        provider.isShowCurrentPassword,
-                        0),
-                    SizedBox(height: AppFontSize.font18),
-                    titleText(AppStrings.strNewPassword),
-                    SizedBox(height: AppFontSize.font8),
-                    textFieldContainer(
-                        provider,
-                        provider.newPasswordController,
-                        AppStrings.strNewPassword,
-                        provider.isShowNewPassword,
-                        1),
-                    SizedBox(height: AppFontSize.font18),
-                    titleText(""),
-                    SizedBox(height: AppFontSize.font8),
-                    textFieldContainer(
-                        provider,
-                        provider.confirmPasswordController,
-                        AppStrings.strConfirmPassword,
-                        provider.isShowConfirmPassword,
-                        2),
-                    SizedBox(height: AppFontSize.font200),
-                    InkWell(
-                      onTap: () {
-                        if (provider.currentPasswordController.text
-                            .trim()
-                            .isEmpty) {
-                          AppSnackBarToast.buildShowSnackBar(
-                              context, AppStrings.strEnterCurrPass);
-                        } else if (provider.newPasswordController.text
-                            .trim()
-                            .isEmpty) {
-                          AppSnackBarToast.buildShowSnackBar(
-                              context, AppStrings.strEnterNewPass);
-                        } else if (provider.newPasswordController.text
-                                .trim()
-                                .length <
-                            8) {
-                          AppSnackBarToast.buildShowSnackBar(
-                              context, AppStrings.strEnterMin8Digit);
-                        } else if (provider.confirmPasswordController.text
-                            .trim()
-                            .isEmpty) {
-                          AppSnackBarToast.buildShowSnackBar(
-                              context, AppStrings.strEnterConfirmPass);
-                        } else if (provider.newPasswordController.text
-                                .trim()
-                                .toString() !=
-                            provider.confirmPasswordController.text
-                                .trim()
-                                .toString()) {
-                          AppSnackBarToast.buildShowSnackBar(
-                              context, AppStrings.strPassNotMatch);
-                        } else {
-                          AppSnackBarToast.buildShowSnackBar(
-                              context, AppStrings.strNewPassChanged);
-                          Navigator.pop(context);
-                        }
-                      },
-                      child: AppButtons.elevatedButton(
-                          AppStrings.strDone,
-                          AppFonts.poppinsFont(TextStyle(
-                              fontSize: AppFontSize.font14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.secondaryColorWhite)),
-                          AppColors.primaryColorBlue),
-                    )
-                  ],
-                ),
+    return Consumer<ChangePassPageProvider>(
+      builder: (context, provider, child) {
+        return Stack(
+          children: [
+            Scaffold(
+          backgroundColor: AppColors.bgColor,
+          appBar: AppBar(
+            elevation: 0.0,
+            backgroundColor: AppColors.secondaryColorWhite,
+            iconTheme: IconThemeData(color: AppColors.secondaryColorBlack),
+            centerTitle: true,
+            title: Text(AppStrings.strChangePassword,
+                style: AppFonts.mazzardFont(TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primaryColorBlue,
+                    fontSize: AppFontSize.font16))),
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: AppFontSize.font10, horizontal: AppFontSize.font20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: AppFontSize.font8),
+                  titleText(AppStrings.strCurrentPassword),
+                  SizedBox(height: AppFontSize.font8),
+                  textFieldContainer(
+                      provider,
+                      provider.currentPasswordController,
+                      AppStrings.strCurrentPassword,
+                      provider.isShowCurrentPassword,
+                      0),
+                  SizedBox(height: AppFontSize.font18),
+                  titleText(AppStrings.strNewPassword),
+                  SizedBox(height: AppFontSize.font8),
+                  textFieldContainer(provider, provider.newPasswordController,
+                      AppStrings.strNewPassword, provider.isShowNewPassword, 1),
+                  SizedBox(height: AppFontSize.font18),
+                  titleText(AppStrings.strConfirmPassword),
+                  SizedBox(height: AppFontSize.font8),
+                  textFieldContainer(
+                      provider,
+                      provider.confirmPasswordController,
+                      AppStrings.strConfirmPassword,
+                      provider.isShowConfirmPassword,
+                      2),
+                  SizedBox(height: AppFontSize.font200),
+                  InkWell(
+                    onTap: () {
+                      if (provider.currentPasswordController.text
+                          .trim()
+                          .isEmpty) {
+                        AppSnackBarToast.buildShowSnackBar(
+                            context, AppStrings.strEnterCurrPass);
+                      } else if (provider.newPasswordController.text
+                          .trim()
+                          .isEmpty) {
+                        AppSnackBarToast.buildShowSnackBar(
+                            context, AppStrings.strEnterNewPass);
+                      } else if (provider.newPasswordController.text
+                              .trim()
+                              .length <
+                          8) {
+                        AppSnackBarToast.buildShowSnackBar(
+                            context, AppStrings.strEnterMin8Digit);
+                      } else if (provider.confirmPasswordController.text
+                          .trim()
+                          .isEmpty) {
+                        AppSnackBarToast.buildShowSnackBar(
+                            context, AppStrings.strEnterConfirmPass);
+                      } else if (provider.newPasswordController.text
+                              .trim()
+                              .toString() !=
+                          provider.confirmPasswordController.text
+                              .trim()
+                              .toString()) {
+                        AppSnackBarToast.buildShowSnackBar(
+                            context, AppStrings.strPassNotMatch);
+                      } else {
+                        provider.changePass(
+                            context);
+
+                        // Navigator.pop(context);
+                      }
+                    },
+                    child: AppButtons.elevatedButton(
+                        AppStrings.strDone,
+                        AppFonts.poppinsFont(TextStyle(
+                            fontSize: AppFontSize.font14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.secondaryColorWhite)),
+                        AppColors.primaryColorBlue),
+                  )
+                ],
               ),
             ),
-          ));
-        },
-      ),
+          ),
+        ),
+            Visibility(
+                visible: provider.isLoading,
+                child: Scaffold(
+                    backgroundColor: Colors.black45,
+                    body: Center(
+                      child: CircularProgressIndicator(),
+                    )))
+          ],
+        );
+      },
     );
   }
 

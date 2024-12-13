@@ -2,7 +2,10 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:player_connect/home_dir/player_dir/provider/player_provider.dart';
 import 'package:player_connect/login_dir/provider/login_provider.dart';
+import 'package:player_connect/shared/auth/local_db_saver.dart';
+import 'package:player_connect/shared/constant/app_details.dart';
 import 'package:player_connect/shared/constant/app_strings.dart';
 import 'package:player_connect/shared/constant/button.dart';
 import 'package:player_connect/shared/constant/colors.dart';
@@ -12,6 +15,7 @@ import 'package:player_connect/shared/constant/images.dart';
 import 'package:player_connect/shared/constant/snack_bar_toast.dart';
 import 'package:player_connect/shared/auth/routes.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -21,16 +25,34 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  getFcmToken() async {
+    await FirebaseMessaging.instance.requestPermission();
+    await FirebaseMessaging.instance.getToken().then((value) async => {
+          LocalDataSaver.saveUserFcmToken(value),
+          await fetchDataSPreferences(),
+          print("==========$value"),
+          setState(() {}),
+        });
+  }
+
+  @override
+  void initState() {
+    getFcmToken();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<LoginProvider>(
-      create: (_) {
-        return LoginProvider();
-      },
-      child: Consumer<LoginProvider>(
-        builder: (context, provider, child) {
-          return SafeArea(
-              child: Scaffold(
+    return Consumer<LoginProvider>(
+      builder: (context, provider, child) {
+        return GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: Scaffold(
             body: Stack(
               children: [
                 SingleChildScrollView(
@@ -41,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: AppFontSize.font10),
+                        SizedBox(height: MediaQuery.of(context).padding.top),
                         Image(
                           image: AssetImage(AppImages.appLogo),
                           height: AppFontSize.font60,
@@ -51,14 +73,18 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(height: AppFontSize.font10),
                         buildTextSpan(AppStrings.strLog, AppStrings.strIN),
                         SizedBox(height: AppFontSize.font18),
-                        Text(AppStrings.strEmail,
-                            style: AppFonts.poppinsFont(TextStyle(
+                        Text(
+                          AppStrings.strEmail,
+                          style: AppFonts.poppinsFont(
+                            TextStyle(
                                 fontSize: AppFontSize.font12,
                                 fontWeight: FontWeight.w400,
-                                color: AppColors.secondaryColorBlack))),
+                                color: AppColors.secondaryColorBlack),
+                          ),
+                        ),
                         SizedBox(height: AppFontSize.font10),
                         textFieldContainer(provider, provider.emailController,
-                            AppStrings.strEnterEmail, TextInputAction.next),
+                            AppStrings.strEnterEmail),
                         SizedBox(height: AppFontSize.font18),
                         Text(AppStrings.strPwd,
                             style: AppFonts.poppinsFont(TextStyle(
@@ -66,11 +92,8 @@ class _LoginPageState extends State<LoginPage> {
                                 fontWeight: FontWeight.w400,
                                 color: AppColors.secondaryColorBlack))),
                         SizedBox(height: AppFontSize.font10),
-                        textFieldContainer(
-                            provider,
-                            provider.passwordController,
-                            AppStrings.strPwd,
-                            TextInputAction.done),
+                        textFieldContainer(provider,
+                            provider.passwordController, AppStrings.strPwd),
                         SizedBox(height: AppFontSize.font18),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -103,21 +126,27 @@ class _LoginPageState extends State<LoginPage> {
                             } else {
                               // AppSnackBarToast.buildShowSnackBar(
                               //     context, "Login Successfully");
-
+                              Provider.of<PlayerProvider>(context,
+                                      listen: false)
+                                  .selectedId = 1;
+                              getFcmToken();
                               provider.login(context)?.then((value) {
-                                value == true
-                                    ? Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        AppRoutes.dashBoardPage,
-                                        (route) => false)
-                                    : null;
+                                if (value == true) {
+                                  provider.emailController.clear();
+                                  provider.passwordController.clear();
+                                  pageSelected = 0;
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      AppRoutes.dashBoardPage,
+                                      (route) => false);
+                                }
                               });
                             }
                           },
                           child: AppButtons.elevatedButton(
-                              AppStrings.strLogin,
+                              AppStrings.strLogin.toUpperCase(),
                               AppFonts.poppinsFont(TextStyle(
-                                  fontSize: AppFontSize.font16,
+                                  fontSize: AppFontSize.font14,
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.secondaryColorWhite)),
                               AppColors.primaryColorBlue),
@@ -151,9 +180,44 @@ class _LoginPageState extends State<LoginPage> {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              mediaImage(AppImages.fbLogoImg),
-                              mediaImage(AppImages.googleLogoImg),
-                              mediaImage(AppImages.twitterLogoImg),
+                              InkWell(
+                                  onTap: () {
+                                    provider.facebookSignInOrSignUp(context);
+                                  },
+                                  child: mediaImage(AppImages.fbLogoImg)),
+                              InkWell(
+                                  onTap: () {
+                                    // signProvider.dialogBoxApp(context, "1", "Z6umrOGgA5fFfGokqhPcwXVjeN42");
+                                    provider.appleSignInOrSignUp(context);
+                                  },
+                                  child: Container(
+                                    height: AppFontSize.font60,
+                                    width: AppFontSize.font60,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.secondaryColorWhite,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(500))),
+                                    child: Center(
+                                      child: Image(
+                                        image:
+                                            AssetImage(AppImages.appleLogoImg),
+                                        height: AppFontSize.font40,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  )),
+                              InkWell(
+                                  onTap: () {
+                                    provider.getFcmToken();
+                                    provider.signInOrSignUpGoogle(context);
+                                    // provider.checkUser(context, 'davindersingh00743@gmail.com');
+                                  },
+                                  child: mediaImage(AppImages.googleLogoImg)),
+                              InkWell(
+                                  onTap: () async {
+                                    provider.twitterSignInOrSignUp(context);
+                                  },
+                                  child: mediaImage(AppImages.twitterXLogoImg)),
                             ]),
                         SizedBox(height: AppFontSize.font30),
                         Text.rich(TextSpan(
@@ -161,14 +225,14 @@ class _LoginPageState extends State<LoginPage> {
                             style: AppFonts.poppinsFont(TextStyle(
                                 fontWeight: FontWeight.w400,
                                 color: AppColors.secondaryColorBlack,
-                                fontSize: AppFontSize.font16)),
+                                fontSize: AppFontSize.font14)),
                             children: <InlineSpan>[
                               TextSpan(
-                                  text: AppStrings.strSignUp,
+                                  text: AppStrings.strSignUp.toUpperCase(),
                                   style: AppFonts.poppinsFont(TextStyle(
                                       fontWeight: FontWeight.w700,
                                       color: AppColors.primaryColorBlue,
-                                      fontSize: AppFontSize.font16)),
+                                      fontSize: AppFontSize.font14)),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
                                       Navigator.pushReplacementNamed(
@@ -189,9 +253,9 @@ class _LoginPageState extends State<LoginPage> {
                         )))
               ],
             ),
-          ));
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -204,8 +268,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget textFieldContainer(
-      LoginProvider provider, controller, hintText, textInputAction) {
+  Widget textFieldContainer(LoginProvider provider, controller, hintText) {
     return Container(
       height: AppFontSize.font45,
       decoration: BoxDecoration(
@@ -217,7 +280,6 @@ class _LoginPageState extends State<LoginPage> {
                 ? false
                 : provider.isShowPassword,
             controller: controller,
-            textInputAction: textInputAction,
             decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: hintText,

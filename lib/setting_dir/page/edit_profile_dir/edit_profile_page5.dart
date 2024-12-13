@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unused_import
+// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:player_connect/setting_dir/provider/edit_profile_provider.dart';
@@ -8,8 +8,6 @@ import 'package:player_connect/shared/constant/colors.dart';
 import 'package:player_connect/shared/constant/font_size.dart';
 import 'package:player_connect/shared/constant/fonts.dart';
 import 'package:player_connect/shared/constant/icon_image.dart';
-import 'package:player_connect/shared/constant/images.dart';
-import 'package:player_connect/shared/auth/routes.dart';
 import 'package:player_connect/shared/widget/player_style_dialog_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -23,36 +21,20 @@ class EditProfilePage5 extends StatefulWidget {
 class _EditProfilePage5State extends State<EditProfilePage5> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<EditProfileProvider>(
-      create: (_) {
-        return EditProfileProvider();
-      },
-      child: Consumer<EditProfileProvider>(
-        builder: (context, provider, child) {
-          return SafeArea(
-              child: Scaffold(
+    return Consumer<EditProfileProvider>(
+      builder: (context, provider, child) {
+        return GestureDetector(
+          onTap: (){
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: Stack(
+            children: [
+          Scaffold(
             backgroundColor: AppColors.bgColor,
-            appBar: AppBar(
-              elevation: 0.0,
-              backgroundColor: AppColors.secondaryColorWhite,
-              // leading: InkWell(
-              //   onTap: () {
-              //     Navigator.pop(context);
-              //   },
-              //   child: Image(
-              //     image: AssetImage(AppIconImages.backIconImg),
-              //     height: AppFontSize.font24,
-              //     width: AppFontSize.font24,
-              //   ),
-              // ),
-              iconTheme: IconThemeData(color: AppColors.secondaryColorBlack),
-              centerTitle: true,
-              title: Text(AppStrings.strEditProfile,
-                  style: AppFonts.mazzardFont(TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primaryColorBlue,
-                      fontSize: AppFontSize.font18))),
-            ),
+            appBar: provider.buildAppBar( context, 5),
             body: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.all(AppFontSize.font12),
@@ -69,7 +51,7 @@ class _EditProfilePage5State extends State<EditProfilePage5> {
                             showDialog(
                                 context: context,
                                 builder: (context) =>
-                                    PlayerStyleDialogWidget());
+                                    PlayerStyleDialogWidget(provider: provider));
                           },
                           child: Image(
                             image: AssetImage(AppIconImages.helpIconImg),
@@ -86,13 +68,78 @@ class _EditProfilePage5State extends State<EditProfilePage5> {
                       ],
                     ),
                     SizedBox(height: AppFontSize.font12),
-                    provider.textFieldContainer(
-                        provider,
-                        AppStrings.strPlayingStyle,
-                        provider.playingStyleController,
-                        1),
+                    // provider.textFieldContainer(
+                    //     provider,
+                    //     AppStrings.strPlayingStyle,
+                    //     provider.playingStyleController,
+                    //     1),
+
+                    Stack(
+                      children: [
+                        Container(
+                          // height: AppFontSize.font45,
+                          decoration: BoxDecoration(
+                              color: AppColors.secondaryColorWhite,
+                              border: Border.all(
+                                  color: AppColors.secondaryColorBlack,
+                                  width: 1),
+                              borderRadius:
+                              BorderRadius.circular(AppFontSize.font12)),
+                          child: Center(
+                            child: TextFormField(
+                                onTap: () {
+                          provider.        openDropdown(context);
+
+                                },
+                                controller: provider.playingStyleController,
+                                readOnly: true,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  // hintText: AppStrings.strSelect,
+                                  contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 8),
+                                  hintStyle: AppFonts.poppinsFont(TextStyle(
+                                      fontSize: AppFontSize.font14,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.secondaryColorBlack)),
+                                )),
+                          ),
+                        ),
+                        Positioned(
+                          right: 10,
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              // value: selectedValue,
+
+                              onChanged: (newValue) {
+                                setState(() {
+                                  provider.playingStyleController =
+                                      TextEditingController(
+                                          text: newValue.toString());
+                                });
+                              },
+                              items: [
+                                "All Court",
+                                "Agressive Baseliner",
+                                "Serve and Volley",
+                                "Counter-Puncher",
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+
+
                     SizedBox(height: AppFontSize.font12),
-                    provider.buildText(""),
+                    provider.buildText(AppStrings.strDiamondHand),
                     SizedBox(height: AppFontSize.font12),
                     Row(
                       children: [
@@ -107,6 +154,7 @@ class _EditProfilePage5State extends State<EditProfilePage5> {
                             groupValue: provider.isDiamondHand,
                             onChanged: (value) {
                               provider.getBoolDiamondHand(value as bool);
+                              provider.isChanged = true;
                             },
                           ),
                         ),
@@ -120,6 +168,7 @@ class _EditProfilePage5State extends State<EditProfilePage5> {
                             groupValue: provider.isDiamondHand,
                             onChanged: (value) {
                               provider.getBoolDiamondHand(value as bool);
+                              provider.isChanged = true;
                             },
                           ),
                         ),
@@ -140,13 +189,13 @@ class _EditProfilePage5State extends State<EditProfilePage5> {
                                   AppFonts.mazzardFont(TextStyle(
                                       fontWeight: FontWeight.w600,
                                       color: AppColors.primaryColorBlue,
-                                      fontSize: AppFontSize.font16)),
+                                      fontSize: AppFontSize.font14)),
                                   AppColors.primaryColorSkyBlue)),
                         ),
                         InkWell(
                           onTap: () {
-                            Navigator.pushNamedAndRemoveUntil(context,
-                                AppRoutes.dashBoardPage, (route) => false);
+                            provider.editUserProfileData(context,5);
+
                           },
                           child: SizedBox(
                               width: MediaQuery.of(context).size.width / 2.5,
@@ -155,7 +204,7 @@ class _EditProfilePage5State extends State<EditProfilePage5> {
                                   AppFonts.mazzardFont(TextStyle(
                                       fontWeight: FontWeight.w600,
                                       color: AppColors.secondaryColorWhite,
-                                      fontSize: AppFontSize.font16)),
+                                      fontSize: AppFontSize.font14)),
                                   AppColors.primaryColorBlue)),
                         ),
                       ],
@@ -164,9 +213,19 @@ class _EditProfilePage5State extends State<EditProfilePage5> {
                 ),
               ),
             ),
-          ));
-        },
-      ),
+          ),
+          Visibility(
+              visible: provider.isLoading,
+              child: Scaffold(
+                backgroundColor: Colors.black26,
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )),
+            ],
+          ),
+        );
+      },
     );
   }
 }

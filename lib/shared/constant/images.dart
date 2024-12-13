@@ -8,7 +8,9 @@ class AppImages {
   static const playInfoImg3 = "$baseUrl/playInfoImg3.png";
   static const googleLogoImg = "$baseUrl/googleLogo.png";
   static const fbLogoImg = "$baseUrl/fbLogo.png";
+  static const appleLogoImg = "$baseUrl/Group.png";
   static const twitterLogoImg = "$baseUrl/twitterLogo.png";
+  static const twitterXLogoImg = "$baseUrl/twitterXLogoImg.png";
   static const connectWithImg = "$baseUrl/connectWithImg.png";
   static const playerRecc = "$baseUrl/player_recc.png";
   static const flagImg = "$baseUrl/flagImg.png";

@@ -1,11 +1,16 @@
 // ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, deprecated_member_use, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:player_connect/home_dir/player_dir/provider/player_provider.dart';
+import 'package:player_connect/shared/constant/app_details.dart';
 import 'package:player_connect/shared/constant/app_strings.dart';
 import 'package:player_connect/shared/constant/button.dart';
 import 'package:player_connect/shared/constant/colors.dart';
 import 'package:player_connect/shared/constant/font_size.dart';
 import 'package:player_connect/shared/constant/fonts.dart';
+import 'package:provider/provider.dart';
+
+import '../../setting_dir/page/edit_profile_dir/edit_profile_page4.dart';
 
 class AlertFilterTabWidget extends StatefulWidget {
   const AlertFilterTabWidget({
@@ -18,9 +23,9 @@ class AlertFilterTabWidget extends StatefulWidget {
 
 class _AlertFilterTabWidgetState extends State<AlertFilterTabWidget> {
   int tabWidget = 1;
-  double? utrRating = 0.0;
-  double? ntrpRating = 0.0;
-  double? userDistance = 0.0;
+  double? utrRating = 0;
+  double? ntrpRating = 0;
+  double? userDistance = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -114,35 +119,39 @@ class _AlertFilterTabWidgetState extends State<AlertFilterTabWidget> {
                                       color: AppColors.secondaryColorBlack,
                                       fontSize: AppFontSize.font14))),
                               Spacer(),
-                              Text(utrRating.toString(),
-                                  style: AppFonts.poppinsFont(TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColors.secondaryColorBlack,
-                                      fontSize: AppFontSize.font14)))
+                              SizedBox(
+                                width: 100,
+                                height: 25,
+                                child: Text(utrRating!.toStringAsFixed(1),
+                                    textAlign: TextAlign.right,
+                                    style: AppFonts.poppinsFont(TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.secondaryColorBlack,
+                                        fontSize: AppFontSize.font14))),
+                              )
                             ],
                           ),
                           SizedBox(height: AppFontSize.font12),
+
+
                           Container(
-                            width: MediaQuery.of(context).size.width -
-                                (AppFontSize.font24 + AppFontSize.font24),
-                            child: Slider(
+                            width: MediaQuery.of(context).size.width - (AppFontSize.font24 + AppFontSize.font24),
+                            child: CustomSlider(
                               min: 0.0,
                               max: 16.5,
-                              // allowedInteraction: SliderInteraction.tapAndSlide,
-                              activeColor: AppColors.primaryColorBlue,
-                              thumbColor: AppColors.secondaryColorBlack,
-                              inactiveColor: AppColors.infoPageCount,
                               value: utrRating!,
                               onChanged: (value) {
+                                utrRating = value;
                                 setState(() {});
                               },
                               onChangeEnd: (value) {
-                                utrRating =
-                                    double.parse(value.toStringAsFixed(1));
+                                utrRating = double.parse(value.toStringAsFixed(1));
                                 setState(() {});
                               },
                             ),
                           ),
+
+
                           SizedBox(height: AppFontSize.font12),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -153,35 +162,44 @@ class _AlertFilterTabWidgetState extends State<AlertFilterTabWidget> {
                                       color: AppColors.secondaryColorBlack,
                                       fontSize: AppFontSize.font14))),
                               Spacer(),
-                              Text("$userDistance '${AppStrings.strMiles}",
-                                  style: AppFonts.poppinsFont(TextStyle(
+                              SizedBox(
+                                width: 100,
+                                height: 25,
+                                child: Text(
+                                  "${userDistance?.toInt()} ${AppStrings.strMiles}",
+                                  textAlign: TextAlign.right,
+                                  style: AppFonts.poppinsFont(
+                                    TextStyle(
                                       fontWeight: FontWeight.w600,
                                       color: AppColors.secondaryColorBlack,
-                                      fontSize: AppFontSize.font14)))
+                                      fontSize: AppFontSize.font14,
+                                    ),
+                                  ),
+                                ),
+                              )
                             ],
                           ),
+
                           SizedBox(height: AppFontSize.font12),
+
                           Container(
-                            width: MediaQuery.of(context).size.width -
-                                (AppFontSize.font24 + AppFontSize.font24),
-                            child: Slider(
+                            width: MediaQuery.of(context).size.width - (AppFontSize.font24 + AppFontSize.font24),
+                            child: CustomSlider(
                               min: 0.0,
                               max: 50,
-                              // allowedInteraction: SliderInteraction.tapAndSlide,
-                              activeColor: AppColors.primaryColorBlue,
-                              thumbColor: AppColors.secondaryColorBlack,
-                              inactiveColor: AppColors.infoPageCount,
                               value: userDistance!,
                               onChanged: (value) {
+                                userDistance = value;
                                 setState(() {});
                               },
                               onChangeEnd: (value) {
-                                userDistance =
-                                    double.parse(value.toStringAsFixed(1));
+                                userDistance = double.parse(value.toStringAsFixed(1));
                                 setState(() {});
                               },
+                              // stringAsFixed : 0,
                             ),
                           ),
+
                           SizedBox(height: AppFontSize.font12),
                         ],
                       )
@@ -197,35 +215,38 @@ class _AlertFilterTabWidgetState extends State<AlertFilterTabWidget> {
                                       color: AppColors.secondaryColorBlack,
                                       fontSize: AppFontSize.font14))),
                               Spacer(),
-                              Text(ntrpRating.toString(),
-                                  style: AppFonts.poppinsFont(TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColors.secondaryColorBlack,
-                                      fontSize: AppFontSize.font14)))
+                              SizedBox(
+                                width: 100,
+                                height: 25,
+                                child: Text(ntrpRating!.toStringAsFixed(1),
+                                    textAlign: TextAlign.right,
+                                    style: AppFonts.poppinsFont(TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.secondaryColorBlack,
+                                        fontSize: AppFontSize.font14))),
+                              )
                             ],
                           ),
+
                           SizedBox(height: AppFontSize.font12),
+
                           Container(
-                            width: MediaQuery.of(context).size.width -
-                                (AppFontSize.font24 + AppFontSize.font24),
-                            child: Slider(
+                            width: MediaQuery.of(context).size.width - (AppFontSize.font24 + AppFontSize.font24),
+                            child: CustomSlider(
                               min: 0.0,
-                              max: 7.0,
-                              // allowedInteraction: SliderInteraction.tapAndSlide,
-                              activeColor: AppColors.primaryColorBlue,
-                              thumbColor: AppColors.secondaryColorBlack,
-                              inactiveColor: AppColors.infoPageCount,
+                              max: 7,
                               value: ntrpRating!,
                               onChanged: (value) {
+                                ntrpRating = value;
                                 setState(() {});
                               },
                               onChangeEnd: (value) {
-                                ntrpRating =
-                                    double.parse(value.toStringAsFixed(1));
+                                ntrpRating = double.parse(value.toStringAsFixed(1));
                                 setState(() {});
                               },
                             ),
                           ),
+
                           SizedBox(height: AppFontSize.font12),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -236,35 +257,42 @@ class _AlertFilterTabWidgetState extends State<AlertFilterTabWidget> {
                                       color: AppColors.secondaryColorBlack,
                                       fontSize: AppFontSize.font14))),
                               Spacer(),
-                              Text("$userDistance '${AppStrings.strMiles}",
-                                  style: AppFonts.poppinsFont(TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColors.secondaryColorBlack,
-                                      fontSize: AppFontSize.font14)))
+                              SizedBox(
+                                width: 100,
+                                height: 25,
+                                child: Text("${userDistance?.toInt()} ${AppStrings.strMiles}",
+                                    textAlign: TextAlign.right,
+                                    style: AppFonts.poppinsFont(TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.secondaryColorBlack,
+                                        fontSize: AppFontSize.font14),
+                                    ),
+                                ),
+                              )
                             ],
                           ),
+
                           SizedBox(height: AppFontSize.font12),
+
                           Container(
-                            width: MediaQuery.of(context).size.width -
-                                (AppFontSize.font24 + AppFontSize.font24),
-                            child: Slider(
+                            width: MediaQuery.of(context).size.width - (AppFontSize.font24 + AppFontSize.font24),
+                            child: CustomSlider(
                               min: 0.0,
                               max: 50,
-                              // allowedInteraction: SliderInteraction.tapAndSlide,
-                              activeColor: AppColors.primaryColorBlue,
-                              thumbColor: AppColors.secondaryColorBlack,
-                              inactiveColor: AppColors.infoPageCount,
                               value: userDistance!,
                               onChanged: (value) {
+                                userDistance = value;
                                 setState(() {});
                               },
                               onChangeEnd: (value) {
-                                userDistance =
-                                    double.parse(value.toStringAsFixed(1));
+                                userDistance = double.parse(value.toStringAsFixed(1));
                                 setState(() {});
                               },
                             ),
                           ),
+
+
+
                           SizedBox(height: AppFontSize.font12),
                         ],
                       )
@@ -278,13 +306,14 @@ class _AlertFilterTabWidgetState extends State<AlertFilterTabWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap: () {
+                  onTap: () {isRatingsData = false;
+                  setState(() {});
                     Navigator.pop(context);
                   },
                   child: Container(
                       width: MediaQuery.of(context).size.width / 3,
                       child: AppButtons.elevatedButton(
-                          AppStrings.strCancel,
+                          AppStrings.strCancel.toUpperCase(),
                           AppFonts.mazzardFont(TextStyle(
                               fontWeight: FontWeight.w600,
                               color: AppColors.primaryColorBlue,
@@ -293,6 +322,22 @@ class _AlertFilterTabWidgetState extends State<AlertFilterTabWidget> {
                 ),
                 InkWell(
                   onTap: () {
+                    isRatingsData = true;
+                    setState(() {});
+                    Provider.of<PlayerProvider>(context, listen: false)
+                        .searchApi(context,
+                            name: "",
+                            uRating: tabWidget == 1
+                                ? int.parse(utrRating!.toStringAsFixed(0))
+                                : null,
+                            nRating: tabWidget != 1
+                                ? int.parse(ntrpRating!.toStringAsFixed(0))
+                                : null,
+                            distance:
+                                int.parse(userDistance!.toStringAsFixed(0)));
+
+                    // print(tabWidget != 1 ? int.parse(ntrpRating!.toStringAsFixed(0)) : -1);
+
                     Navigator.pop(context);
                   },
                   child: Container(

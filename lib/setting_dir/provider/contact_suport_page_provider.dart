@@ -7,6 +7,7 @@ class ContactSupportPageProvider extends ChangeNotifier {
   TextEditingController dropDownController = TextEditingController();
   TextEditingController queryController = TextEditingController();
   String? selectedValue;
+
   Widget buildText(title) {
     return Text(title,
         style: AppFonts.mazzardFont(TextStyle(

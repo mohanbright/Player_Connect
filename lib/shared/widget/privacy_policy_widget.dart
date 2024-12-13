@@ -36,7 +36,7 @@ class _PrivacyPolicyWidgetState extends State<PrivacyPolicyWidget> {
             Navigator.of(context).pop();
           },
           child: AppButtons.elevatedButton(
-              AppStrings.strAgree,
+              AppStrings.strAgree.toUpperCase(),
               AppFonts.poppinsFont(TextStyle(
                   fontSize: AppFontSize.font14,
                   fontWeight: FontWeight.w600,

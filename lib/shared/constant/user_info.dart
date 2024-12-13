@@ -5,6 +5,8 @@ class UserDetails {
   static String? userEmail;
   static String? userDob;
   static String? userLocation;
+  static String? userLatitude;
+  static String? userLongitude;
   static String? userPhone;
   static String? userPhoto;
   static String? userPassword;
@@ -29,7 +31,12 @@ class UserDetails {
   static String? countryFlag;
   static String? cmHeight;
   static bool? isUtr;
+  static bool? userRating;
   static bool? userDominantHand;
+  static bool? isEmailNotify;
+  static bool? isPhoneNotify;
+  static bool? isAppNotify;
+
 
 
 }

@@ -1,4 +1,4 @@
-package com.example.player_connect
+package com.app.player_connect
 
 import io.flutter.embedding.android.FlutterActivity
 

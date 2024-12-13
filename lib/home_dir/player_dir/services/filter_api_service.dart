@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:player_connect/home_dir/player_dir/model/players_list_model.dart';
-import 'package:player_connect/shared/constant/api_utils.dart';
 import 'package:player_connect/shared/constant/app_strings.dart';
 import 'package:player_connect/shared/constant/snack_bar_toast.dart';
 import 'package:player_connect/shared/constant/user_info.dart';
@@ -21,7 +20,7 @@ class FilterApiService {
   Future? filterApi(context, utrRating, ntrpRating, distanceFromMe) async {
     try {
       var response = await http.post(
-        Uri.parse(AppApiUtils.playersDetailsUrl),
+        Uri.parse("AppApiUtils.playersDetailsUrl"),
         headers: {
           "auth_token": UserDetails.userAuthToken!,
           "utr_rating": utrRating,

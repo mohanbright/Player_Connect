@@ -20,19 +20,25 @@ class LocalDataSaver {
   static String infoKey = "Info Key";
   static String authTokenKey = "Auth Token Key";
   static String fcmTokenKey = "Fcm Token Key";
+  static String splashPageKey = "Splash Page Key";
   static String logKey = "Log Key";
 
-  static String firstNameKey = "First Key";
-  static String lastNameKey = "Last Key";
+  static String firstNameKey = "First Name Key";
+  static String lastNameKey = "Last Name Key";
   static String aboutKey = "About Key";
   static String ageKey = "Age Key";
   static String countryKey = "Country Key";
   static String countryFlagKey = "Country Flag Key";
   static String heightKey = "Height Key";
+  static String latitudeKey = "Latitude Key";
+  static String longtitudeKey = "Longtitude Key";
   static String isUtrKey = "Is Utr Key";
   static String maxDisKey = "Max Dis Key";
   static String desPartKey = "Des Part Key";
   static String cmHeightKey = "Cm Height Key";
+  static String isEmailNotifyKey = "Email Notify Key";
+  static String isPhoneNotifyKey = "Phone Notify  Key";
+  static String isAppNotifyKey = "App Notify Key";
 
   static Future<bool> saveUserID(String? userID) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -184,6 +190,16 @@ class LocalDataSaver {
     return await preferences.getString(fcmTokenKey);
   }
 
+  static Future<bool> saveUserSplashData(bool? isSplashPage) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.setBool(splashPageKey, isSplashPage!);
+  }
+
+  static Future<bool?> getUserSplashData() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.getBool(splashPageKey);
+  }
+
   static Future<bool> saveUserLogData(bool? isUserLoggedIn) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return await preferences.setBool(logKey, isUserLoggedIn!);
@@ -244,6 +260,27 @@ class LocalDataSaver {
     return await preferences.getString(heightKey);
   }
 
+  static Future<bool> saveUserLatitude(String? latitude) async {
+    print('Save User Latitude Issue :- $latitude');
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.setString(latitudeKey, latitude!);
+  }
+
+  static Future<String?> getUserLatitude() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.getString(latitudeKey);
+  }
+
+  static Future<bool> saveUserLongitude(String? longitude) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.setString(longtitudeKey, longitude!);
+  }
+
+  static Future<String?> getUserLongitude() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.getString(longtitudeKey);
+  }
+
   static Future<bool> saveUserAge(String? age) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return await preferences.setString(ageKey, age!);
@@ -274,9 +311,9 @@ class LocalDataSaver {
     return await preferences.getString(maxDisKey);
   }
 
-  static Future<bool> saveUserDesPart(String? cm) async {
+  static Future<bool> saveUserDesPart(String? desP) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return await preferences.setString(desPartKey, cm!);
+    return await preferences.setString(desPartKey, desP!);
   }
 
   static Future<String?> getUserDesPart() async {
@@ -302,6 +339,36 @@ class LocalDataSaver {
   static Future<bool?> getUserIsDominant() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return await preferences.getBool(dominantHandKey);
+  }
+
+  static Future<bool> saveUserIsEmailNotify(bool? isEmailNotify) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.setBool(isEmailNotifyKey, isEmailNotify!);
+  }
+
+  static Future<bool?> getUserIsEmailNotify() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.getBool(isEmailNotifyKey);
+  }
+
+  static Future<bool> saveUserIsPhoneNotify(bool? isPhoneNotify) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.setBool(isPhoneNotifyKey, isPhoneNotify!);
+  }
+
+  static Future<bool?> getUserIsPhoneNotify() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.getBool(isPhoneNotifyKey);
+  }
+
+  static Future<bool> saveUserIsAppNotify(bool? isAppNotify) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.setBool(isAppNotifyKey, isAppNotify!);
+  }
+
+  static Future<bool?> getUserIsAppNotify() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.getBool(isAppNotifyKey);
   }
 }
 
@@ -332,10 +399,17 @@ Future fetchDataSPreferences() async {
   UserDetails.age = await LocalDataSaver.getUserAge();
   UserDetails.cmHeight = await LocalDataSaver.getUserHeightCm();
   UserDetails.userLocation = await LocalDataSaver.getUserLocation();
+  UserDetails.userLatitude = await LocalDataSaver.getUserLatitude();
+  UserDetails.userLongitude = await LocalDataSaver.getUserLongitude();
   UserDetails.isUtr = await LocalDataSaver.getUserIsUtr();
   UserDetails.desPart = await LocalDataSaver.getUserDesPart();
   UserDetails.driDis = await LocalDataSaver.getUserDriDis();
+  // UserDetails.userRating = await LocalDataSaver.getUserDriDis();
+  UserDetails.userDesiredPartner = await LocalDataSaver.getUserDesPart();
   UserDetails.userDominantHand = await LocalDataSaver.getUserIsDominant();
+  UserDetails.isEmailNotify = await LocalDataSaver.getUserIsEmailNotify();
+  UserDetails.isPhoneNotify = await LocalDataSaver.getUserIsPhoneNotify();
+  UserDetails.isAppNotify = await LocalDataSaver.getUserIsAppNotify();
 }
 
 clearDataSPreferences() async {
@@ -376,5 +450,19 @@ Future removeDataSPreferences() async {
   await preferences.remove("Log Key");
   await preferences.remove("Auth Token Key");
   await preferences.remove("Fcm Token Key");
+  await preferences.remove("First Name Key");
+  await preferences.remove("Last Name Key");
+  await preferences.remove("About Key");
+  await preferences.remove("Age Key");
+  await preferences.remove("Country Key");
+  await preferences.remove("Country Flag Key");
+  await preferences.remove("Height Key");
+  await preferences.remove("Is Utr Key");
+  await preferences.remove("Max Dis Key");
+  await preferences.remove("Des Part Key");
+  await preferences.remove("Cm Height Key");
+  await preferences.remove("Email Notify Key");
+  await preferences.remove("Phone Notify Key");
+  await preferences.remove("App Notify Key");
   await preferences.clear();
 }

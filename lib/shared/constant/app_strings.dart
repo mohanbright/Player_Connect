@@ -1,14 +1,15 @@
 class AppStrings {
   static const strEditProfile = "Edit Profile";
   static const strPlayers = "Players";
-  static const strTermsConditions = "Terms & Condition";
+  static const strHome = "Home";
+  static const strTermsConditions = "Terms & Conditions";
   static const strAgree = "AGREE";
   static const strPrivacyPolicy = "Privacy Policy";
   static const strPlayingStyle = "Playing Style";
   static const strClose = "close";
   static const strFilter = "filter";
   static const strUtr = "utr";
-  static const strNtrp = "ntrp";
+  static const strNtrp = "NTRP";
   static const strUtrRating = "UTR Rating";
   static const strDistanceFromMe = "Distance from me";
   static const strMiles = "Miles";
@@ -17,6 +18,13 @@ class AppStrings {
   static const strFrom = "from";
   static const strGetStarted = "Get Started";
   static const strChat = "Chat";
+  static const strNotificationCount = "Notification Count";
+  static const strShowMore = "Show More";
+  static const strShowLess = "Show Less";
+  static const strCounterPuncher = "Counter Puncher";
+  static const strLoremIpsum =
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore";
+  static const strQuery = "Query";
   static const strAge = "Age";
   static const strViewPlayerInfo = "View Player Information";
   static const strConnect = "Connect";
@@ -44,7 +52,8 @@ class AppStrings {
   static const strAppNotifi = "App Notifications";
   static const strDeleteAccount = "Delete Account";
   static const strIsLogOut = "Log Out?";
-  static const strLogOutSuccess = "User LogOut Successfully.";
+  static const strLogOutSuccess = "User successfully logged out";
+  static const strAccountDeleteSuccess = "User Account Deleted Successfully.";
   static const strSureToLogOut = "Are you sure you want to logout?";
   static const strOnceAccountDeleted =
       "Once your account has been deleted, it's gone for good. That includes your profile ohoto, connect, and conversations.";
@@ -73,14 +82,16 @@ class AppStrings {
       "Confirm password not matched with new password.";
   static const strNewPassChanged = "User new password successfully changed.";
   static const strFindOutPlayingStyle = "Find out my playing style";
-  static const strDiamondHand = "Diamond Hand";
+  static const strDiamondHand = "Dominant Hand";
   static const strLeft = "Left";
   static const strRight = "Right";
   static const strBack = "back";
-  static const strHaveUtr = "Do you a have UTR rating?";
+  static const strInches = "Inches";
+  static const strHaveUtr = "Do you have a UTR rating?";
   static const strNotSureRatingIs = "Not sure what my rating is";
   static const strMaxDriveDistance = "Maximum Driving Distance";
   static const strDesiredpartner = "Your Desired Partner";
+  static const strEnterDesiredpartner = "Please enter your Desired Partner";
   static const strWhatLookingFor =
       "Give a brief description outlining what you are looking for in a local hitting partner.";
   static const strNext = "next";
@@ -95,7 +106,8 @@ class AppStrings {
   static const strLastName = "Last Name";
   static const strPhoneNumber = "Phone Number";
   static const strTennisExp = "Tennis Experience";
-  static const strWriteAboutU = "Write something about you...";
+  // static const strWriteAboutU = "Write something about you...";
+  static const strYourTennisExperience = "Your tennis experience";
   static const strUploadProfilePic = "Please upload Profile Photo";
   static const strEnterFirstName = "Please enter First Name";
   static const strEnterLastName = "Please enter Last Name";
@@ -106,6 +118,7 @@ class AppStrings {
   static const strInvalidCredentials = "Invalid Credentials";
   static const strThank = "Thank";
   static const strYou = "You";
+  static const strEnterReason = "Please enter your reason";
   static const strAccountVerified =
       "Your account has been successfully verified";
   static const strProceedToAccount = "PROCEED TO YOUR ACCOUNT";
@@ -133,6 +146,7 @@ class AppStrings {
   static const strCant = "Can't";
   static const strIsLogin = "Login?";
   static const strSend = "Send";
+  static const strFeet = "feet";
   static const strConnectWith = "Connect With";
   static const strSent = "Sent";
   static const strTellAboutGame = "Tell us more about your game";
@@ -145,7 +159,7 @@ class AppStrings {
   static const strEnterHeightInInches = "Please enter Height in Inches";
   static const strEnterValidHeightInInches = "Please enter Height in Inches";
   static const strCompleteProfile = "Complete Your Profile";
-  static const strTextArea = "Textarea";
+  // static const strTextArea = "Text Area";
   static const strRecommended = "Recommended";
   static const strContinue = "Continue";
   static const strSomethingAboutU = "Write something about you...";
@@ -159,20 +173,23 @@ class AppStrings {
   static const strSearchPlayers = "Search Players";
   static const strPrefDistanceFromCourt = "Preferred Distance from Court";
   static const strRequest = "Request";
-  static const strRequestAccept = "Request Accept";
+  static const strRequests = "Requests";
+  static const strRequestAccept = "Accept Request";
   static const strSureToAcceptRequest =
-      "Are you sure you want to accept request?";
+      "Are you sure you want to accept this request?";
   static const strRequestAccepted = "User request accept successfully";
   static const strRequestDecline = "Request Decline";
   static const strSureToDeclineRequest =
-      "Are you sure you want to decline request?";
+      "Are you sure you want to decline this request?";
   static const strRequestDeclinedSuccess = "User request declined successfully";
   static const strSuccessfullMatches = "Successful Matches";
   static const strSearch = "Search";
+  static const strMinAgo = "min ago";
   static const strConnectWithPerson = "Connect with this person?";
   static const strAlthoughUHaveNotConnected =
       "Although you haven't connected with this person, they are interested in playing tennis with you.";
   static const strDeny = "Deny";
   static const strWriteMessage = "Write a message...";
   static const strSender = "Sender";
+  static const strClearNotifications = "Clear Notifications";
 }

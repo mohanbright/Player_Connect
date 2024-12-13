@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, prefer_typing_uninitialized_variables
+// ignore_for_file: sized_box_for_whitespace, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:player_connect/shared/constant/app_strings.dart';
@@ -8,6 +8,7 @@ import 'package:player_connect/shared/constant/font_size.dart';
 import 'package:player_connect/shared/constant/fonts.dart';
 
 class AlertDialogWidget extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final provider;
 
   const AlertDialogWidget({Key? key, this.provider}) : super(key: key);
@@ -43,7 +44,7 @@ class _AlertDialogWidgetState extends State<AlertDialogWidget> {
                   ? ListTileTitleAlignment.top
                   : ListTileTitleAlignment.center,
               contentPadding: EdgeInsets.all(0),
-              title: Text(AppStrings.strNtrp.toUpperCase(),
+              title: Text(AppStrings.strNtrp,
                   style: AppFonts.poppinsFont(TextStyle(
                       fontWeight: FontWeight.w400,
                       color: AppColors.secondaryColorBlack,
@@ -79,7 +80,7 @@ class _AlertDialogWidgetState extends State<AlertDialogWidget> {
               ),
               subtitle: widget.provider.ratingListIndex == index
                   ? Text(
-                      widget.provider.descriptionList[0],
+                      widget.provider.descriptionList[index],
                       style: AppFonts.poppinsFont(TextStyle(
                           fontSize: AppFontSize.font14,
                           fontWeight: FontWeight.w400,
@@ -101,7 +102,7 @@ class _AlertDialogWidgetState extends State<AlertDialogWidget> {
           child: AppButtons.elevatedButton(
               AppStrings.strClose.toUpperCase(),
               AppFonts.poppinsFont(TextStyle(
-                  fontSize: AppFontSize.font16,
+                  fontSize: AppFontSize.font14,
                   fontWeight: FontWeight.w600,
                   color: AppColors.secondaryColorWhite)),
               AppColors.primaryColorBlue),

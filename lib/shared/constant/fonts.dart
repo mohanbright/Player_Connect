@@ -21,14 +21,14 @@ Widget buildTextSpan(firstText, secondText) {
       style: AppFonts.poppinsFont(TextStyle(
           fontWeight: FontWeight.w700,
           color: AppColors.primaryColorBlue,
-          fontSize: AppFontSize.font28)),
+          fontSize: AppFontSize.font24)),
       children: <InlineSpan>[
         TextSpan(
           text: '$secondText',
           style: AppFonts.poppinsFont(TextStyle(
               fontWeight: FontWeight.w400,
               color: AppColors.primaryColorBlue,
-              fontSize: AppFontSize.font28)),
+              fontSize: AppFontSize.font24)),
         )
       ]));
 }
